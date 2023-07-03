@@ -23,14 +23,15 @@ async function renderPage() {
   const pixabayAPI = new PixabayAPI();
   const queryStr = refs.input.value.replace(/ /g, '+');
   const response = await pixabayAPI.getImages(queryStr)
-    /* .then(resp => {
-      console.log(resp.results);
-      p = createGalleryCard(resp.results);
-      console.log(p);
+    .then(resp => {
+      console.log(1,resp.data);
+      p = createGalleryCard(resp.data.hits);
+      console.log(2, p);
+      refs.gallery.innerHTML=p;
     })
     .catch(err => {
       //console.log(err);
       Notiflix.Notify.failure(err.message);
-    }); */
-  console.log(response);
+    }
+    ); 
 }
