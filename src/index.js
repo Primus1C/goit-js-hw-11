@@ -1,7 +1,21 @@
-import axios from 'axios';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
+import { getImages } from './pixabayAPI';
 
-const axios = require('axios');
-const apiKey = '6095343-d47de4ae86d54fd6f681d759d';
-const baseURL = 'https://pixabay.com/api/';
-const baseType = 'image_type=photo';
+const refs = {
+  form: document.querySelector('.search-form'),
+  input: document.querySelector('input[name="searchQuery"]'),
+  /* stepArea: document.querySelector('input[name="step"]'),
+  amountArea: document.querySelector('input[name="amount"]'), */
+};
+
+refs.form.addEventListener('submit', onFormSubmit);
+
+function onFormSubmit(evt) {
+  evt.preventDefault();
+  console.log('submited!');
+  //console.log(refs.input.value.replace(/ /g, '+'));
+  const p = getImages(refs.input.value.replace(/ /g, '+'));
+  //console.log(p);
+}
