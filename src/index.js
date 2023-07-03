@@ -38,6 +38,9 @@ async function renderPage(page) {
     .then(resp => {
       //console.log('Total', resp.data.totalHits);
       const totalPages = Math.ceil(Number(resp.data.totalHits) / 40);
+      if (totalPages>0) {
+        Notiflix.Notify.success(`Hooray! We found ${resp.data.totalHits} images.`);
+      };
       arrData = createGalleryCard(resp.data.hits);
       if (arrData.length === 0) {
         Notiflix.Notify.info(
