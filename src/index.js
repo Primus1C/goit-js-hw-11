@@ -26,27 +26,33 @@ function onFormSubmit(evt) {
 }
 
 function onClickNext(evt) {
-  page +=1;
+  page += 1;
   renderPage(page);
 }
-  
+
 async function renderPage(page) {
   const pixabayAPI = new PixabayAPI(page);
   const queryStr = refs.input.value.replace(/ /g, '+');
   const response = await pixabayAPI
     .getImages(queryStr)
     .then(resp => {
-      //console.log('data', resp.data);
+      //console.log('Total', resp.data.totalHits);
+      const totalPages = Math.ceil(Number(resp.data.totalHits) / 40);
       arrData = createGalleryCard(resp.data.hits);
       if (arrData.length === 0) {
         Notiflix.Notify.info(
           'Sorry, there are no images matching your search query. Please try again.'
         );
-      } else { 
-        //if (arrData.length === 0) { }
-        showElement(refs.containerNext);
+        return;
       };
-      //console.log(2, arrData);
+      if (page > totalPages) {
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results"
+        );
+        showElement(refs.containerNext, false);
+        return;
+      };
+      showElement(refs.containerNext);
       refs.gallery.innerHTML = arrData;
       const lightbox = new SimpleLightbox('.gallery a', {
         captionDelay: 250,
