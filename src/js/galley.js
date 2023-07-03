@@ -1,0 +1,1 @@
+import { pixabayAPI } from './PixabayAPI';
