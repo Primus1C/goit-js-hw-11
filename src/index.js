@@ -21,7 +21,6 @@ showElement(refs.containerNext, false);
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-  //console.log('submited!');
   renderPage();
 }
 
@@ -36,7 +35,6 @@ async function renderPage(page) {
   const response = await pixabayAPI
     .getImages(queryStr)
     .then(resp => {
-      //console.log('Total', resp.data.totalHits);
       const totalPages = Math.ceil(Number(resp.data.totalHits) / 40);
       if (totalPages>0) {
         Notiflix.Notify.success(`Hooray! We found ${resp.data.totalHits} images.`);
@@ -62,13 +60,11 @@ async function renderPage(page) {
       });
     })
     .catch(err => {
-      //console.log(err);
       Notiflix.Notify.failure(err.message);
     });
 }
 
 function showElement(element, show = true) {
-  //console.log(show);
   if (show === true) {
     element.classList.remove('hidden');
   } else {
