@@ -2,10 +2,12 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import { PixabayAPI } from './js/PixabayAPI';
+import createGalleryCard from '../templates/gallery-card.hbs';
 
 const refs = {
   form: document.querySelector('.search-form'),
   input: document.querySelector('input[name="searchQuery"]'),
+  gallery: document.querySelector('.gallery'),
   buttonNext: document.querySelector('.button'),
 };
 
@@ -14,8 +16,21 @@ refs.form.addEventListener('submit', onFormSubmit);
 function onFormSubmit(evt) {
   evt.preventDefault();
   console.log('submited!');
-  const queryStr = refs.input.value.replace(/ /g, '+');
+  renderPage();
+}
+
+async function renderPage() {
   const pixabayAPI = new PixabayAPI();
-  answer = pixabayAPI.getImages(queryStr);
-  console.log(answer);
+  const queryStr = refs.input.value.replace(/ /g, '+');
+  const response = await pixabayAPI.getImages(queryStr)
+    /* .then(resp => {
+      console.log(resp.results);
+      p = createGalleryCard(resp.results);
+      console.log(p);
+    })
+    .catch(err => {
+      //console.log(err);
+      Notiflix.Notify.failure(err.message);
+    }); */
+  console.log(response);
 }
