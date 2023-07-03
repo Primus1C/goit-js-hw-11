@@ -41,7 +41,7 @@ async function renderPage(page) {
       if (totalPages>0) {
         Notiflix.Notify.success(`Hooray! We found ${resp.data.totalHits} images.`);
       };
-      arrData = createGalleryCard(resp.data.hits);
+      const arrData = createGalleryCard(resp.data.hits);
       if (arrData.length === 0) {
         Notiflix.Notify.info(
           'Sorry, there are no images matching your search query. Please try again.'
