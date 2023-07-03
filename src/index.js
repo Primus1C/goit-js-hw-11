@@ -15,29 +15,31 @@ const refs = {
 refs.form.addEventListener('submit', onFormSubmit);
 refs.buttonNext.addEventListener('click', onClickNext);
 
-let page = 1;
+let curPage = 1;
 
 showElement(refs.containerNext, false);
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-  renderPage();
+  renderPage(curPage, true);
 }
 
 function onClickNext(evt) {
-  page += 1;
-  renderPage(page);
+  curPage += 1;
+  renderPage(curPage, false);
 }
 
-async function renderPage(page) {
+async function renderPage(page, itsFirstQuery) {
   const pixabayAPI = new PixabayAPI(page);
   const queryStr = refs.input.value.replace(/ /g, '+');
   const response = await pixabayAPI
     .getImages(queryStr)
     .then(resp => {
       const totalPages = Math.ceil(Number(resp.data.totalHits) / 40);
-      if (totalPages>0) {
-        Notiflix.Notify.success(`Hooray! We found ${resp.data.totalHits} images.`);
+      if ((totalPages > 0) && (itsFirstQuery===true)) {
+        Notiflix.Notify.success(
+          `Hooray! We found ${resp.data.totalHits} images.`
+        );
       };
       const arrData = createGalleryCard(resp.data.hits);
       if (arrData.length === 0) {
@@ -52,7 +54,7 @@ async function renderPage(page) {
         );
         showElement(refs.containerNext, false);
         return;
-      };
+      }
       showElement(refs.containerNext);
       refs.gallery.innerHTML = arrData;
       const lightbox = new SimpleLightbox('.gallery a', {
