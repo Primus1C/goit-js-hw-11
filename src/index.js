@@ -53,6 +53,8 @@ async function renderPage(page, itsFirstQuery) {
       Notiflix.Notify.info(
         'Sorry, there are no images matching your search query. Please try again.'
       );
+      showElement(refs.gallery, false);
+      showElement(refs.containerNext, false);
       return;
     }
     if (page === totalPages) {
@@ -65,6 +67,7 @@ async function renderPage(page, itsFirstQuery) {
     } else {
       showElement(refs.containerNext);
     }
+    showElement(refs.gallery);
     refs.gallery.innerHTML = arrData;
     const lightbox = new SimpleLightbox('.gallery a', {
       captionDelay: 250,
