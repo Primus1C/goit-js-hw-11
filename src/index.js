@@ -33,7 +33,7 @@ function onClickNext(evt) {
 }
 
 async function renderPage(page, itsFirstQuery) {
-  const pixabayAPI = new PixabayAPI(page);
+  const pixabayAPI = new PixabayAPI(page, PER_PAGE);
   const queryStr = refs.input.value.trim().replace(/ /g, '+');
   if (queryStr === '' && itsFirstQuery) {
     return;
@@ -67,8 +67,13 @@ async function renderPage(page, itsFirstQuery) {
     } else {
       showElement(refs.containerNext);
     }
+    if (page === 1) {
+      refs.gallery.innerHTML = '';
+    }
     showElement(refs.gallery);
-    refs.gallery.innerHTML = arrData;
+    //refs.gallery.innerHTML = arrData;
+    refs.gallery.insertAdjacentHTML('beforeend', arrData);
+    console.log(refs.gallery.innerHTML);
     const lightbox = new SimpleLightbox('.gallery a', {
       captionDelay: 250,
     });

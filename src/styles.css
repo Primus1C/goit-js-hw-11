@@ -9,12 +9,16 @@ body {
 }
 
 .search-form {
-    display: flex;
+    /*display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center;*/
     height: 40px;
+    width: 100%;
     background-color: darkslateblue;
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
+    text-align: center;
+    position: sticky;
+    top: 0;
 }
 
 .container-more {
@@ -32,6 +36,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     list-style-type: none;
+    margin-top: 60px;
 }
 
 .photo-card {
